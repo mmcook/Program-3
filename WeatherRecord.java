@@ -8,7 +8,6 @@ import java.util.ArrayList;
  */
 public class WeatherRecord extends Record{
     // TODO declare data structures required
-
 	ArrayList<Double> output;
 	
 	/**
@@ -17,8 +16,6 @@ public class WeatherRecord extends Record{
 	 */
     public WeatherRecord(int numFiles) {
     	super(numFiles);
-    	
-		
 		output = new ArrayList<Double>();
 		
 		clear();
