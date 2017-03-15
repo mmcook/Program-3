@@ -44,12 +44,15 @@ public class WeatherRecord extends Record{
 			for(int i = 0; i < line2.length; i++)
 				info2[i] = Double.parseDouble(line2[i]);
 			
+			//Return a positive value if the station for the former is larger
 			if(info1[0] > info2[0])
 				return 1;
 			
+			//Return a negative value if the station for the latter is larger
 			else if(info1[0] < info2[0])
 				return -1;
 			
+			//If the station is the same, compare the dates
 			else
 			{
 				if(info1[1] > info2[1])
@@ -80,6 +83,8 @@ public class WeatherRecord extends Record{
 	 */
     public void clear() {
 		// TODO initialize/reset data members
+    	
+    	//Modify the ArrayList items to Double.MIN_VALUE
     	for(int i = 0; i < output.size(); i++)
     		output.set(i, Double.MIN_VALUE);
     }
@@ -93,13 +98,18 @@ public class WeatherRecord extends Record{
 	 */
     public void join(FileLine li) {
 		// TODO implement join() functionality
+    	
+    	//Parse the FileLine into double array
     	String[] line = li.getString().split(",");
     	double[] lineInfo = new double[line.length];
     	
     	for(int i = 0; i < line.length; i++)
     		lineInfo[i] = Double.parseDouble(line[i]);
     	
+    	output.set(0, lineInfo[0]);
+    	output.set(1, lineInfo[1]);
     	
+    	output.set(li.getFileIterator().getIndex() + 2, lineInfo[2]);
     	
     }
     
@@ -109,7 +119,18 @@ public class WeatherRecord extends Record{
     public String toString() {
 		String string = "";
 		
-		
+		for(int i = 0; i < output.size(); i++)
+		{	
+			//If the reading is empty, add a hyphen. Otherwise, print the reading
+			if(output.get(i) == Double.MIN_VALUE)
+				string = string.concat("-");	
+			else
+				string = string.concat("" + output.get(i));
+			
+			//Add comma unless its the last reading
+			if(i != output.size() - 1)
+				string = string.concat(",");
+		}
 		
 		return string;
     }
