@@ -115,11 +115,36 @@ public class ThesaurusRecord extends Record{
 	 * See the assignment description and example runs for the exact output format.
 	 */
     public String toString() {
+    	if (syn.size() == 1) {
+    		return null;
+    	}
 		reheapify();
-		return null;
+		
+		String str = syn.get(0) + ":";
+		int counter = 0;
+		
+		for (int i = 1; i < syn.size() - 1; i++) {
+			str += syn.get(i) + ",";
+			counter = i;
+		}
+		
+		str += syn.get(counter + 1);
+		
+		return str;
 	}
     
     private void reheapify() {
-    	
+    	if (syn.size() == 2) {
+    		return;
+    	}
+    	for (int i = 1; i < syn.size(); i++) {
+    		for (int j = i + 1; j < syn.size(); j++) {
+    			if (syn.get(j).compareTo(syn.get(i)) > 0) {
+    				String temp = syn.get(i);
+    				syn.set(i, syn.get(j));
+    				syn.set(j, temp);
+    			}
+    		}
+    	}
     }
 }
