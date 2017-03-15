@@ -10,8 +10,6 @@ public class ThesaurusRecord extends Record{
     // TODO declare data structures required
 
 	ArrayList<String> syn;
-	MinPriorityQueueADT<FileLine> queue;
-	Comparator<FileLine> cmp;
 	
 	/**
 	 * Constructs a new ThesaurusRecord by passing the parameter to the parent constructor
@@ -19,9 +17,7 @@ public class ThesaurusRecord extends Record{
 	 */
     public ThesaurusRecord(int numFiles) {
     	super(numFiles);
-    	
-    	cmp = getComparator();
-		queue = new FileLinePriorityQueue(numFiles, cmp);
+   
     	syn = new ArrayList<String>();    	
     	clear();
     }

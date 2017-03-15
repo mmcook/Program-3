@@ -8,8 +8,7 @@ import java.util.ArrayList;
  */
 public class WeatherRecord extends Record{
     // TODO declare data structures required
-	MinPriorityQueueADT<FileLine> queue;
-	Comparator<FileLine> cmp;
+
 	ArrayList<Double> output;
 	
 	/**
@@ -19,8 +18,7 @@ public class WeatherRecord extends Record{
     public WeatherRecord(int numFiles) {
     	super(numFiles);
     	
-		cmp = getComparator();
-		queue = new FileLinePriorityQueue(numFiles, cmp);
+		
 		output = new ArrayList<Double>();
 		
 		clear();
