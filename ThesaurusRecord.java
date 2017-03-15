@@ -10,6 +10,8 @@ public class ThesaurusRecord extends Record{
     // TODO declare data structures required
 
 	ArrayList<String> syn;
+	MinPriorityQueueADT<FileLine> queue;
+	Comparator<FileLine> cmp;
 	
 	/**
 	 * Constructs a new ThesaurusRecord by passing the parameter to the parent constructor
@@ -18,6 +20,8 @@ public class ThesaurusRecord extends Record{
     public ThesaurusRecord(int numFiles) {
     	super(numFiles);
     	
+    	cmp = getComparator();
+		queue = new FileLinePriorityQueue(numFiles, cmp);
     	syn = new ArrayList<String>();    	
     	clear();
     }
@@ -78,17 +82,44 @@ public class ThesaurusRecord extends Record{
 	 * which are not already found in this ThesaurusRecord's list of synonyms.
 	 */
     public void join(FileLine w) {
+    	if (w.getString().indexOf(':') == -1) {
+    		return;
+    	}
+    	
     	String[] line = w.getString().split(",");
+    	
     	String[] newLine = new String[line.length + 1];
     	newLine[0] = line[0].substring(0, line[0].indexOf(':'));
     	newLine[1] = line[0].substring(line[0].indexOf(':') + 1);
+    	
+    	
+    	for (int i = 2; (i-1) < line.length; i++) {
+    		newLine[i] = line[i - 1];
+    	}
+    	
+    	
+    	for (int j = 0; j < newLine.length; j++) {
+    		boolean match = false;
+    		for (int e = 0; e < syn.size(); e++) {
+    			if (newLine[j].equals(syn.get(e))) {
+    				match = true;
+    			}
+    		}
+    		if (match == false) {
+    			syn.add(newLine[j]);
+    		}
+    	}
     }
 	
 	/**
 	 * See the assignment description and example runs for the exact output format.
 	 */
     public String toString() {
-		// TODO
+		reheapify();
 		return null;
 	}
+    
+    private void reheapify() {
+    	
+    }
 }
