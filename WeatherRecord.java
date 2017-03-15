@@ -10,19 +10,20 @@ public class WeatherRecord extends Record{
     // TODO declare data structures required
 	MinPriorityQueueADT<FileLine> queue;
 	Comparator<FileLine> cmp;
-	ArrayList<FileLine> output;
+	ArrayList<Double> output;
 	
 	/**
 	 * Constructs a new WeatherRecord by passing the parameter to the parent constructor
 	 * and then calling the clear method()
 	 */
     public WeatherRecord(int numFiles) {
-		super(numFiles);
-		clear();
-		
+    	super(numFiles);
+    	
 		cmp = getComparator();
 		queue = new FileLinePriorityQueue(numFiles, cmp);
-		output = new ArrayList<FileLine>();
+		output = new ArrayList<Double>();
+		
+		clear();
     }
 	
 	/**
@@ -79,9 +80,8 @@ public class WeatherRecord extends Record{
 	 */
     public void clear() {
 		// TODO initialize/reset data members
-    	
-    	
-    	
+    	for(int i = 0; i < output.size(); i++)
+    		output.set(i, Double.MIN_VALUE);
     }
 
 	/**
@@ -98,8 +98,6 @@ public class WeatherRecord extends Record{
     	
     	for(int i = 0; i < line.length; i++)
     		lineInfo[i] = Double.parseDouble(line[i]);
-    	
-    	
     	
     	
     	
