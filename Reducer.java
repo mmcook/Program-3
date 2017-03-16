@@ -74,20 +74,16 @@ public class Reducer {
 			FileLinePriorityQueue q = new FileLinePriorityQueue(fileList.size(), comp);
 			
 			for (int t = 0; t < fileList.size()-1; t++) {
-				
 				q.insert(fileList.get(t).next());
-			 
-				
-				
 			}
 			
-			
+			FileLine l = null;
 			FileLine fl = q.removeMin();
 			r.join(fl);
 			q.insert(fileList.get(fl.getFileIterator().getIndex()).next());
 		
 			while (!q.isEmpty()) {
-				FileLine l = q.removeMin();
+				l = q.removeMin();
 				if (comp.compare(fl,l) == 0) {
 					r.join(l);
 					q.insert(fileList.get(l.getFileIterator().getIndex()).next());

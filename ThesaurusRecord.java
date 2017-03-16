@@ -70,7 +70,7 @@ public class ThesaurusRecord extends Record{
     public void clear() {
 		// TODO initialize/reset data members
     	for (int i = 0; i < syn.size(); i++) {
-    		syn.set(i, null);
+    		syn.remove(i);
     	}
     	numItems = 0;
     }
@@ -119,7 +119,7 @@ public class ThesaurusRecord extends Record{
     		//return null;
     		System.out.println("Oh no...");
     	}
-		//reheapify();
+		reheapify();
 		
 		String str = syn.get(0) + ":";
 		int counter = 0;
@@ -141,9 +141,9 @@ public class ThesaurusRecord extends Record{
     	for (int i = 1; i < syn.size(); i++) {
     		for (int j = i + 1; j < syn.size(); j++) {
     			if (syn.get(j).compareTo(syn.get(i)) > 0) {
-    				String temp = syn.get(i);
-    				syn.set(i, syn.get(j));
-    				syn.set(j, temp);
+    				String temp = syn.get(j);
+    				syn.set(j, syn.get(i));
+    				syn.set(i, temp);
     			}
     		}
     	}
