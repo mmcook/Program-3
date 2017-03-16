@@ -76,6 +76,9 @@ public class FileLinePriorityQueue implements MinPriorityQueueADT<FileLine> {
     		}
     	}
     	
+    	for (int z = 1; z < numItems; z++) {
+    		queue[z] = queue[z + 1];
+    	}
     	//Decrement index and numItems
     	index--;
     	numItems--;

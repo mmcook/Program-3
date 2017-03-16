@@ -10,6 +10,7 @@ public class ThesaurusRecord extends Record{
     // TODO declare data structures required
 
 	ArrayList<String> syn;
+	int numItems;
 	
 	/**
 	 * Constructs a new ThesaurusRecord by passing the parameter to the parent constructor
@@ -17,7 +18,7 @@ public class ThesaurusRecord extends Record{
 	 */
     public ThesaurusRecord(int numFiles) {
     	super(numFiles);
-   
+    	numItems = 0;
     	syn = new ArrayList<String>();    	
     	clear();
     }
@@ -71,6 +72,7 @@ public class ThesaurusRecord extends Record{
     	for (int i = 0; i < syn.size(); i++) {
     		syn.set(i, null);
     	}
+    	numItems = 0;
     }
 	
 	/**
@@ -99,10 +101,12 @@ public class ThesaurusRecord extends Record{
     		for (int e = 0; e < syn.size(); e++) {
     			if (newLine[j].equals(syn.get(e))) {
     				match = true;
+    				break;
     			}
     		}
     		if (match == false) {
     			syn.add(newLine[j]);
+    			numItems++;
     		}
     	}
     }
@@ -112,9 +116,10 @@ public class ThesaurusRecord extends Record{
 	 */
     public String toString() {
     	if (syn.size() == 1) {
-    		return null;
+    		//return null;
+    		System.out.println("Oh no...");
     	}
-		reheapify();
+		//reheapify();
 		
 		String str = syn.get(0) + ":";
 		int counter = 0;

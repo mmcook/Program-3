@@ -8,7 +8,10 @@ import java.util.ArrayList;
  */
 public class WeatherRecord extends Record{
     // TODO declare data structures required
-	ArrayList<Double> output;
+
+	private int numItems;
+	ArrayList<String> output;
+	private String s1, s2;
 	
 	/**
 	 * Constructs a new WeatherRecord by passing the parameter to the parent constructor
@@ -16,7 +19,10 @@ public class WeatherRecord extends Record{
 	 */
     public WeatherRecord(int numFiles) {
     	super(numFiles);
-		output = new ArrayList<Double>();
+    	numItems = 2;
+		s1 = null;
+		s2 = null;
+		output = new ArrayList<String>();
 		
 		clear();
     }
@@ -78,10 +84,10 @@ public class WeatherRecord extends Record{
 	 */
     public void clear() {
 		// TODO initialize/reset data members
-    	
+    	numItems = 0;
     	//Modify the ArrayList items to Double.MIN_VALUE
     	for(int i = 0; i < output.size(); i++)
-    		output.set(i, Double.MIN_VALUE);
+    		output.set(i, "" + Double.MIN_VALUE);
     }
 
 	/**
@@ -96,16 +102,19 @@ public class WeatherRecord extends Record{
     	
     	//Parse the FileLine into double array
     	String[] line = li.getString().split(",");
-    	double[] lineInfo = new double[line.length];
-    	
-    	for(int i = 0; i < line.length; i++)
-    		lineInfo[i] = Double.parseDouble(line[i]);
-    	
-    	output.set(0, lineInfo[0]);
-    	output.set(1, lineInfo[1]);
-    	
-    	output.set(li.getFileIterator().getIndex() + 2, lineInfo[2]);
-    	
+//    	double[] lineInfo = new double[line.length];
+//    	
+//    	lineInfo[0]= Integer.parseInt(line[0]);
+//    	lineInfo[1]= Integer.parseInt(line[1]);
+//    	
+//    	for(int i = 2; i < line.length; i++)
+//    		lineInfo[i] = Double.parseDouble(line[i]);
+//    	
+    	s1 = line[0];
+    	s2 = line[1];
+//    	
+    	output.add(line[2]);
+    	numItems++;
     }
     
 	/**
@@ -113,20 +122,21 @@ public class WeatherRecord extends Record{
 	 */
     public String toString() {
 		String string = "";
-		
-		for(int i = 0; i < output.size(); i++)
+		string += s1 + s2;
+		for(int i = 0; i < numItems; i++)
 		{	
 			//If the reading is empty, add a hyphen. Otherwise, print the reading
-			if(output.get(i) == Double.MIN_VALUE)
-				string = string.concat("-");	
+			if(output.get(i).contains("" + Double.MIN_VALUE))
+				string += "-";	
 			else
-				string = string.concat("" + output.get(i));
+				string += output.get(i).toString();
 			
 			//Add comma unless its the last reading
-			if(i != output.size() - 1)
-				string = string.concat(",");
+			if(i != numItems - 1)
+				string += ",";
+			
 		}
-		
+		clear();
 		return string;
     }
 }

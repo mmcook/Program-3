@@ -73,11 +73,11 @@ public class Reducer {
 			Comparator<FileLine> comp = r.getComparator();
 			FileLinePriorityQueue q = new FileLinePriorityQueue(fileList.size(), comp);
 			
-			for (int t = 0; t < fileList.size(); t++) {
+			for (int t = 0; t < fileList.size()-1; t++) {
 				
 				q.insert(fileList.get(t).next());
 			 
-				System.out.println("Full");
+				
 				
 			}
 			
@@ -92,11 +92,13 @@ public class Reducer {
 					r.join(l);
 					q.insert(fileList.get(l.getFileIterator().getIndex()).next());
 				} else {
-					r.toString();
+					System.out.println(r.toString());
 					r.clear();
 					fl = l;
 					r.join(fl);
-					q.insert(fileList.get(fl.getFileIterator().getIndex()).next());
+					if (fileList.get(fl.getFileIterator().getIndex()).hasNext()) {
+						q.insert(fileList.get(fl.getFileIterator().getIndex()).next());
+					}
 				}
 			}
 		
